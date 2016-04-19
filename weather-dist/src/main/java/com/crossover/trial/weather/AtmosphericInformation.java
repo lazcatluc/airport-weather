@@ -3,7 +3,7 @@ package com.crossover.trial.weather;
 /**
  * encapsulates sensor information for a particular location
  */
-class AtmosphericInformation {
+public class AtmosphericInformation {
 
     /** temperature in degrees celsius */
     private DataPoint temperature;
@@ -79,7 +79,7 @@ class AtmosphericInformation {
     protected long getLastUpdateTime() {
         return this.lastUpdateTime;
     }
-    protected void setLastUpdateTime(long lastUpdateTime) {
+    public void setLastUpdateTime(long lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 }
