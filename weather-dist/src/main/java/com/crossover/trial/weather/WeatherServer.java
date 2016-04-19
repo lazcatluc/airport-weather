@@ -2,8 +2,6 @@ package com.crossover.trial.weather;
 
 import org.glassfish.grizzly.Connection;
 import org.glassfish.grizzly.http.server.*;
-import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
-import org.glassfish.grizzly.threadpool.ThreadPoolConfig;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -36,11 +34,10 @@ public class WeatherServer {
             resourceConfig.register(RestWeatherQueryEndpoint.class);
 
             HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URL), resourceConfig, false);
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                server.shutdownNow();
-            }));
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> server.shutdownNow()));
 
             HttpServerProbe probe = new HttpServerProbe.Adapter() {
+            	@Override
                 public void onRequestReceiveEvent(HttpServerFilter filter, Connection connection, Request request) {
                     System.out.println(request.getRequestURI());
                 }
@@ -50,7 +47,7 @@ public class WeatherServer {
 
             // the autograder waits for this output before running automated tests, please don't remove it
             server.start();
-            System.out.println(format("Weather Server started.\n url=%s\n", BASE_URL));
+            System.out.println(format("Weather Server started.%n url=%s%n", BASE_URL));
             serverStarted = true;
 
             // blocks until the process is terminated

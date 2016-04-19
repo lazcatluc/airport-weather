@@ -5,6 +5,8 @@ import com.crossover.trial.weather.DataPoint;
 
 class Pressure extends AtmosphericInformationUpdater {
 
+	private static final long serialVersionUID = 19992103777361890L;
+
 	@Override
 	protected double getMinimumMean() {
 		return 650;

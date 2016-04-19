@@ -1,13 +1,9 @@
 package com.crossover.trial.weather;
 
 import static com.crossover.trial.weather.RestWeatherQueryEndpoint.AIRPORT_DATA;
-import static com.crossover.trial.weather.RestWeatherQueryEndpoint.ATMOPSHERIC_INFORMATION;
 import static com.crossover.trial.weather.RestWeatherQueryEndpoint.findAirportData;
-import static com.crossover.trial.weather.RestWeatherQueryEndpoint.getAirportDataIdx;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -25,8 +21,6 @@ import com.google.gson.Gson;
 
 @Path("/collect")
 public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
-	
-	public static final Logger LOGGER = Logger.getLogger(RestWeatherCollectorEndpoint.class.getName());
 
 	/** shared gson json to object factory */
 	public static final Gson GSON = new Gson();
@@ -39,25 +33,21 @@ public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
 	@Override
 	public Response updateWeather(@PathParam("iata") String iataCode, @PathParam("pointType") String pointType,
 			String datapointJson) {
-		
+
 		addDataPoint(iataCode, pointType, GSON.fromJson(datapointJson, DataPoint.class));
-		
+
 		return Response.status(Response.Status.OK).build();
 	}
 
 	@Override
 	public Response getAirports() {
-		Set<String> retval = new HashSet<>();
-		for (AirportData ad : AIRPORT_DATA) {
-			retval.add(ad.getIata());
-		}
-		return Response.status(Response.Status.OK).entity(retval).build();
+		return Response.status(Response.Status.OK)
+				.entity(AIRPORT_DATA.stream().map(AirportData::getIata).collect(Collectors.toSet())).build();
 	}
 
 	@Override
 	public Response getAirport(@PathParam("iata") String iata) {
-		AirportData ad = findAirportData(iata);
-		return Response.status(Response.Status.OK).entity(ad).build();
+		return Response.status(Response.Status.OK).entity(findAirportData(iata)).build();
 	}
 
 	@Override
@@ -95,9 +85,7 @@ public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
 	 *             if the update can not be completed
 	 */
 	public void addDataPoint(String iataCode, String pointType, DataPoint dp) {
-		int airportDataIdx = getAirportDataIdx(iataCode);
-		AtmosphericInformation ai = ATMOPSHERIC_INFORMATION.get(airportDataIdx);
-		updateAtmosphericInformation(ai, pointType, dp);
+		updateAtmosphericInformation(findAirportData(iataCode).getAtmosphericInformation(), pointType, dp);
 	}
 
 	public void updateAtmosphericInformation(AtmosphericInformation ai, String pointType, DataPoint dp) {
@@ -118,13 +106,11 @@ public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
 	 */
 	public static AirportData addAirport(String iataCode, double latitude, double longitude) {
 		AirportData ad = new AirportData();
-		AIRPORT_DATA.add(ad);
-
-		AtmosphericInformation ai = new AtmosphericInformation();
-		ATMOPSHERIC_INFORMATION.add(ai);
 		ad.setIata(iataCode);
 		ad.setLatitude(latitude);
-		ad.setLatitude(longitude);
+		ad.setLongitude(longitude);
+		ad.setAtmosphericInformation(new AtmosphericInformation());
+		AIRPORT_DATA.add(ad);
 		return ad;
 	}
 

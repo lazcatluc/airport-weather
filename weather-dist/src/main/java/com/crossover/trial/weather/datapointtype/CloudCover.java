@@ -5,6 +5,8 @@ import com.crossover.trial.weather.DataPoint;
 
 class CloudCover extends AtmosphericInformationUpdater {
 
+	private static final long serialVersionUID = 6862355523262540792L;
+
 	@Override
 	protected double getMinimumMean() {
 		return 0;

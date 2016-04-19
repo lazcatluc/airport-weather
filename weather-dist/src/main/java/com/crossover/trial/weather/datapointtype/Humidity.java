@@ -5,6 +5,8 @@ import com.crossover.trial.weather.DataPoint;
 
 class Humidity extends AtmosphericInformationUpdater {
 
+	private static final long serialVersionUID = 8379392618487351970L;
+
 	@Override
 	protected double getMinimumMean() {
 		return 0;

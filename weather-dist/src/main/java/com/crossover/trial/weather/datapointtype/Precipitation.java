@@ -5,6 +5,8 @@ import com.crossover.trial.weather.DataPoint;
 
 class Precipitation extends AtmosphericInformationUpdater {
 
+	private static final long serialVersionUID = 5777555453664584235L;
+
 	@Override
 	protected double getMinimumMean() {
 		return 0;

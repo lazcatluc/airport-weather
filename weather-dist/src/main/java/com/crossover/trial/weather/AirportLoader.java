@@ -15,10 +15,10 @@ import java.io.*;
 public class AirportLoader {
 
     /** end point for read queries */
-    private WebTarget query;
+    private final WebTarget query;
 
     /** end point to supply updates */
-    private WebTarget collect;
+    private final WebTarget collect;
 
     public AirportLoader() {
         Client client = ClientBuilder.newClient();
@@ -26,23 +26,25 @@ public class AirportLoader {
         collect = client.target("http://localhost:8080/collect");
     }
 
-    public void upload(InputStream airportDataStream) throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(airportDataStream));
-        String l = null;
-        while ((l = reader.readLine()) != null) {
-            break;
+    public void upload(File file) throws IOException {
+        try (BufferedReader reader = newReader(file)) {
+	        String l;
+	        while ((l = reader.readLine()) != null) {
+	            break;
+	        }
         }
     }
 
-    public static void main(String args[]) throws IOException{
+	protected BufferedReader newReader(File file) throws IOException {
+		return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+	}
+
+    public static void main(String args[]) throws IOException {
         File airportDataFile = new File(args[0]);
         if (!airportDataFile.exists() || airportDataFile.length() == 0) {
-            System.err.println(airportDataFile + " is not a valid input");
-            System.exit(1);
+            throw new FileNotFoundException(airportDataFile + " is not a valid input");
         }
 
-        AirportLoader al = new AirportLoader();
-        al.upload(new FileInputStream(airportDataFile));
-        System.exit(0);
+        new AirportLoader().upload(airportDataFile);
     }
 }

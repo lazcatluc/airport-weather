@@ -1,5 +1,7 @@
 package com.crossover.trial.weather.datapointtype;
 
+import java.io.Serializable;
+
 import com.crossover.trial.weather.AtmosphericInformation;
 import com.crossover.trial.weather.DataPoint;
 
@@ -10,10 +12,13 @@ import com.crossover.trial.weather.DataPoint;
  * @param pointType the data point type as a string
  * @param dp the actual data point
  */
-public abstract class AtmosphericInformationUpdater {
+public abstract class AtmosphericInformationUpdater implements Serializable {
+	private static final long serialVersionUID = -3200566917640133604L;
+
 	protected abstract double getMinimumMean();
 	protected abstract double getMaximumMean();
 	protected abstract void update(AtmosphericInformation ai, DataPoint dp);
+	
 	public final void updateAtmosphericInformation(AtmosphericInformation ai, DataPoint dp) {
 		enforceMeanIsInRange(dp);
 		update(ai, dp);

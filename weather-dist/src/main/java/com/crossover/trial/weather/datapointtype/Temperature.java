@@ -5,6 +5,8 @@ import com.crossover.trial.weather.DataPoint;
 
 class Temperature extends AtmosphericInformationUpdater {
 
+	private static final long serialVersionUID = 6184674034702748891L;
+
 	@Override
 	protected double getMinimumMean() {
 		return -50;

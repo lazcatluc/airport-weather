@@ -20,6 +20,8 @@ public class AirportData {
 
     /** longitude value in degrees */
     double longitude;
+    
+    private AtmosphericInformation atmosphericInformation;
 
     public String getIata() {
         return iata;
@@ -63,4 +65,12 @@ public class AirportData {
     public final int hashCode() {
     	return new HashCodeBuilder().append(getIata()).toHashCode();
     }
+
+	public AtmosphericInformation getAtmosphericInformation() {
+		return atmosphericInformation;
+	}
+
+	public void setAtmosphericInformation(AtmosphericInformation atmosphericInformation) {
+		this.atmosphericInformation = atmosphericInformation;
+	}
 }

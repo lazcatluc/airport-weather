@@ -28,7 +28,7 @@ public class ServerClientITest {
 			"/query/weather/MMU/0\n"+
 			"query.MMU.0: [{\"temperature\":null,\"wind\":null,\"humidity\":null,\"precipitation\":null,\"pressure\":null,\"cloudCover\":null}]\n"+
 			"/query/ping\n"+
-			"query.ping: {\"iata_freq\":{\"EWR\":0.2,\"MMU\":0.2,\"BOS\":0.2,\"LGA\":0.2,\"JFK\":0.2},\"radius_freq\":[0],\"datasize\":0}\n"+
+			"query.ping: {\"iata_freq\":{\"EWR\":0.2,\"MMU\":0.2,\"LGA\":0.2,\"BOS\":0.2,\"JFK\":0.2},\"radius_freq\":[0],\"datasize\":0}\n"+
 			"/collect/exit\n"+
 			"complete";	
 

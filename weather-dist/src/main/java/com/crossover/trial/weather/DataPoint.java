@@ -12,44 +12,19 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class DataPoint {
 
-    private double mean;
-    private int first;
-    private int second;
-    private int third;
-    private int count;
-
-    /** private constructor, use the builder to create this object */
-	private DataPoint() {
-
-    }
+    private final double mean;
+    private final int first;
+    private final int second;
+    private final int third;
+    private final int count;
     
-    protected DataPoint(Builder builder) {
+    private DataPoint(Builder builder) {
         this.first = builder.first;
         this.mean = builder.mean;
         this.second = builder.median;
         this.third = builder.last;
         this.count = builder.count;
     }
-    
-    public void setMean(double mean) {
-		this.mean = mean;
-	}
-
-	public void setFirst(int first) {
-		this.first = first;
-	}
-
-	public void setSecond(int second) {
-		this.second = second;
-	}
-
-	public void setThird(int third) {
-		this.third = third;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
 
     /** the mean of the observations */
     public double getMean() {

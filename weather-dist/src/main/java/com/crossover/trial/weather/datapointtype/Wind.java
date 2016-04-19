@@ -5,6 +5,8 @@ import com.crossover.trial.weather.DataPoint;
 
 class Wind extends AtmosphericInformationUpdater {
 
+	private static final long serialVersionUID = 5367417752679509286L;
+
 	@Override
 	protected double getMinimumMean() {
 		return 0;
