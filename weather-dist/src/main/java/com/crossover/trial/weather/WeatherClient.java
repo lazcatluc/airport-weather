@@ -11,15 +11,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * A reference implementation for the weather client. Consumers of the REST API can look at WeatherClient
- * to understand API semantics. This existing client populates the REST endpoint with dummy data useful for
- * testing.
+ * A reference implementation for the weather client. Consumers of the REST API
+ * can look at WeatherClient to understand API semantics. This existing client
+ * populates the REST endpoint with dummy data useful for testing.
  *
  * @author code test administrator
  */
 public class WeatherClient {
 
-	public static final Logger LOGGER = Logger.getLogger(WeatherClient.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(WeatherClient.class.getName());
     private static final String BASE_URI = "http://localhost:9090";
 
     /** end point for read queries */
@@ -27,11 +27,11 @@ public class WeatherClient {
 
     /** end point to supply updates */
     private final WebTarget collect;
-    
+
     /** don't use System.out directly for writing */
     private final PrintStream printStream;
 
-    public WeatherClient(PrintStream printStream) {        
+    public WeatherClient(PrintStream printStream) {
         query = ClientBuilder.newClient().target(BASE_URI + "/query");
         collect = ClientBuilder.newClient().target(BASE_URI + "/collect");
         this.printStream = printStream;
@@ -56,10 +56,9 @@ public class WeatherClient {
     }
 
     public void populate(String pointType, int first, int last, int mean, int median, int count) {
-    	WebTarget path = collect.path("/weather/BOS/" + pointType);
-        DataPoint dp = new DataPoint.Builder()
-                .withFirst(first).withLast(last).withMean(mean).withMedian(median).withCount(count)
-                .build();
+        WebTarget path = collect.path("/weather/BOS/" + pointType);
+        DataPoint dp = new DataPoint.Builder().withFirst(first).withLast(last).withMean(mean).withMedian(median)
+                .withCount(count).build();
         path.request().post(Entity.entity(dp, MediaType.APPLICATION_JSON));
     }
 
@@ -67,7 +66,7 @@ public class WeatherClient {
         try {
             collect.path("/exit").request().get();
         } catch (RuntimeException e) {
-        	LOGGER.log(Level.SEVERE, e, e::getMessage);
+            LOGGER.log(Level.SEVERE, e, e::getMessage);
         }
     }
 

@@ -6,9 +6,9 @@ package com.crossover.trial.weather;
  * @author code test administrator
  */
 public enum DataPointType {
-    WIND (new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setWind)
+    WIND(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setWind)
     		.withMeanUpTo(Double.MAX_VALUE).build()),
-    TEMPERATURE (new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setTemperature)
+    TEMPERATURE(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setTemperature)
     		.withMeanFrom(-50).build()),
     HUMIDTY(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setHumidity).build()),
     PRESSURE(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setPressure)
@@ -16,7 +16,7 @@ public enum DataPointType {
     CLOUDCOVER(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setCloudCover).build()), 
     PRECIPITATION(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setPrecipitation).build());
 
-	private final AtmosphericInformationUpdater updater;
+	private final transient AtmosphericInformationUpdater updater;
 
 	private DataPointType(AtmosphericInformationUpdater updater) {
 		this.updater = updater;

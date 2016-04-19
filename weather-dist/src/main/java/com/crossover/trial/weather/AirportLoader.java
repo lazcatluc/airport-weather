@@ -6,7 +6,8 @@ import javax.ws.rs.client.WebTarget;
 import java.io.*;
 
 /**
- * A simple airport loader which reads a file from disk and sends entries to the webservice
+ * A simple airport loader which reads a file from disk and sends entries to the
+ * webservice
  *
  * TODO: Implement the Airport Loader
  * 
@@ -28,16 +29,16 @@ public class AirportLoader {
 
     public void upload(File file) throws IOException {
         try (BufferedReader reader = newReader(file)) {
-	        String l;
-	        while ((l = reader.readLine()) != null) {
-	            break;
-	        }
+            String l;
+            while ((l = reader.readLine()) != null) {
+                break;
+            }
         }
     }
 
-	protected BufferedReader newReader(File file) throws IOException {
-		return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-	}
+    protected BufferedReader newReader(File file) throws IOException {
+        return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+    }
 
     public static void main(String args[]) throws IOException {
         File airportDataFile = new File(args[0]);

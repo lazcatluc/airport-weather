@@ -21,12 +21,16 @@ public interface WeatherCollectorEndpoint {
     Response ping();
 
     /**
-     * Update the airports atmospheric information for a particular pointType with
-     * json formatted data point information.
+     * Update the airports atmospheric information for a particular pointType
+     * with json formatted data point information.
      *
-     * @param iataCode the 3 letter airport code
-     * @param pointType the point type, {@link DataPointType} for a complete list
-     * @param datapointJson a json dict containing mean, first, second, third and count keys
+     * @param iataCode
+     *            the 3 letter airport code
+     * @param pointType
+     *            the point type, {@link DataPointType} for a complete list
+     * @param datapointJson
+     *            a json dict containing mean, first, second, third and count
+     *            keys
      *
      * @return HTTP Response code
      */

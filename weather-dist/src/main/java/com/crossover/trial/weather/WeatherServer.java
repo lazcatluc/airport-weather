@@ -12,10 +12,10 @@ import java.util.logging.Logger;
 
 import static java.lang.String.*;
 
-
 /**
- * This main method will be use by the automated functional grader. You shouldn't move this class or remove the
- * main method. You may change the implementation, but we encourage caution.
+ * This main method will be use by the automated functional grader. You
+ * shouldn't move this class or remove the main method. You may change the
+ * implementation, but we encourage caution.
  *
  * @author code test administrator
  */
@@ -24,6 +24,10 @@ public class WeatherServer {
     private static final String BASE_URL = "http://localhost:9090/";
     private static volatile boolean serverStarted = false;
     private static boolean shutdownRequested = false;
+
+    private WeatherServer() {
+
+    }
 
     public static void main(String[] args) {
         try {
@@ -37,37 +41,37 @@ public class WeatherServer {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> server.shutdownNow()));
 
             HttpServerProbe probe = new HttpServerProbe.Adapter() {
-            	@Override
+                @Override
                 public void onRequestReceiveEvent(HttpServerFilter filter, Connection connection, Request request) {
                     System.out.println(request.getRequestURI());
                 }
             };
             server.getServerConfiguration().getMonitoringConfig().getWebServerConfig().addProbes(probe);
 
-
-            // the autograder waits for this output before running automated tests, please don't remove it
+            // the autograder waits for this output before running automated
+            // tests, please don't remove it
             server.start();
             System.out.println(format("Weather Server started.%n url=%s%n", BASE_URL));
             serverStarted = true;
 
             // blocks until the process is terminated
-        	synchronized (WeatherServer.class) {
-        		while (!shutdownRequested) {
-        			WeatherServer.class.wait(5000);
-        		}
-        	}
+            synchronized (WeatherServer.class) {
+                while (!shutdownRequested) {
+                    WeatherServer.class.wait(5000);
+                }
+            }
             server.shutdown();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(WeatherServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     protected static boolean isServerStarted() {
-    	return serverStarted;
+        return serverStarted;
     }
 
-	public static synchronized void requestShutdown() {
-		shutdownRequested = true;
-		WeatherServer.class.notifyAll();
-	}
+    public static synchronized void requestShutdown() {
+        shutdownRequested = true;
+        WeatherServer.class.notifyAll();
+    }
 }

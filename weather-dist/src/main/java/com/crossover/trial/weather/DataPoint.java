@@ -6,7 +6,8 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * A collected point, including some information about the range of collected values
+ * A collected point, including some information about the range of collected
+ * values
  *
  * @author code test administrator
  */
@@ -17,7 +18,7 @@ public class DataPoint {
     private final int second;
     private final int third;
     private final int count;
-    
+
     private DataPoint(Builder builder) {
         this.first = builder.first;
         this.mean = builder.mean;
@@ -40,7 +41,7 @@ public class DataPoint {
     public int getSecond() {
         return second;
     }
-    
+
     /** 3rd quartile value -- less noisy upper value */
     public int getThird() {
         return third;
@@ -60,10 +61,10 @@ public class DataPoint {
     public boolean equals(Object that) {
         return EqualsBuilder.reflectionEquals(this, that);
     }
-    
+
     @Override
     public int hashCode() {
-    	return HashCodeBuilder.reflectionHashCode(this);
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     public static class Builder {
@@ -74,7 +75,7 @@ public class DataPoint {
         private int count;
 
         public Builder withFirst(int first) {
-            this.first= first;
+            this.first = first;
             return this;
         }
 

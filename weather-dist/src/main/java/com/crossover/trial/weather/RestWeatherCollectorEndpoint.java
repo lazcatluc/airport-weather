@@ -21,96 +21,96 @@ import com.google.gson.Gson;
 @Path("/collect")
 public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
 
-	/** shared gson json to object factory */
-	public static final Gson GSON = new Gson();
+    /** shared gson json to object factory */
+    public static final Gson GSON = new Gson();
 
-	@Override
-	public Response ping() {
-		return Response.status(Response.Status.OK).entity("ready").build();
-	}
+    @Override
+    public Response ping() {
+        return Response.status(Response.Status.OK).entity("ready").build();
+    }
 
-	@Override
-	public Response updateWeather(@PathParam("iata") String iataCode, @PathParam("pointType") String pointType,
-			String datapointJson) {
+    @Override
+    public Response updateWeather(@PathParam("iata") String iataCode, @PathParam("pointType") String pointType,
+            String datapointJson) {
 
-		addDataPoint(iataCode, pointType, GSON.fromJson(datapointJson, DataPoint.class));
+        addDataPoint(iataCode, pointType, GSON.fromJson(datapointJson, DataPoint.class));
 
-		return Response.status(Response.Status.OK).build();
-	}
+        return Response.status(Response.Status.OK).build();
+    }
 
-	@Override
-	public Response getAirports() {
-		return Response.status(Response.Status.OK)
-				.entity(AIRPORT_DATA.stream().map(AirportData::getIata).collect(Collectors.toSet())).build();
-	}
+    @Override
+    public Response getAirports() {
+        return Response.status(Response.Status.OK)
+                .entity(AIRPORT_DATA.stream().map(AirportData::getIata).collect(Collectors.toSet())).build();
+    }
 
-	@Override
-	public Response getAirport(@PathParam("iata") String iata) {
-		return Response.status(Response.Status.OK).entity(findAirportData(iata)).build();
-	}
+    @Override
+    public Response getAirport(@PathParam("iata") String iata) {
+        return Response.status(Response.Status.OK).entity(findAirportData(iata)).build();
+    }
 
-	@Override
-	public Response addAirport(@PathParam("iata") String iata, @PathParam("lat") String latString,
-			@PathParam("long") String longString) {
-		addAirport(iata, Double.valueOf(latString), Double.valueOf(longString));
-		return Response.status(Response.Status.OK).build();
-	}
+    @Override
+    public Response addAirport(@PathParam("iata") String iata, @PathParam("lat") String latString,
+            @PathParam("long") String longString) {
+        addAirport(iata, Double.valueOf(latString), Double.valueOf(longString));
+        return Response.status(Response.Status.OK).build();
+    }
 
-	@Override
-	public Response deleteAirport(@PathParam("iata") String iata) {
-		return Response.status(Response.Status.NOT_IMPLEMENTED).build();
-	}
+    @Override
+    public Response deleteAirport(@PathParam("iata") String iata) {
+        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
+    }
 
-	@Override
-	public Response exit() {
-		WeatherServer.requestShutdown();
-		return Response.noContent().build();
-	}
-	//
-	// Internal support methods
-	//
+    @Override
+    public Response exit() {
+        WeatherServer.requestShutdown();
+        return Response.noContent().build();
+    }
+    //
+    // Internal support methods
+    //
 
-	/**
-	 * Update the airports weather data with the collected data.
-	 *
-	 * @param iataCode
-	 *            the 3 letter IATA code
-	 * @param pointType
-	 *            the point type {@link DataPointType}
-	 * @param dp
-	 *            a datapoint object holding pointType data
-	 *
-	 * @throws WeatherException
-	 *             if the update can not be completed
-	 */
-	public void addDataPoint(String iataCode, String pointType, DataPoint dp) {
-		updateAtmosphericInformation(findAirportData(iataCode).getAtmosphericInformation(), pointType, dp);
-	}
+    /**
+     * Update the airports weather data with the collected data.
+     *
+     * @param iataCode
+     *            the 3 letter IATA code
+     * @param pointType
+     *            the point type {@link DataPointType}
+     * @param dp
+     *            a datapoint object holding pointType data
+     *
+     * @throws WeatherException
+     *             if the update can not be completed
+     */
+    public void addDataPoint(String iataCode, String pointType, DataPoint dp) {
+        updateAtmosphericInformation(findAirportData(iataCode).getAtmosphericInformation(), pointType, dp);
+    }
 
-	public void updateAtmosphericInformation(AtmosphericInformation ai, String pointType, DataPoint dp) {
-		DataPointType.valueOf(pointType.toUpperCase()).update(ai, dp);
-	}
+    public void updateAtmosphericInformation(AtmosphericInformation ai, String pointType, DataPoint dp) {
+        DataPointType.valueOf(pointType.toUpperCase()).update(ai, dp);
+    }
 
-	/**
-	 * Add a new known airport to our list.
-	 *
-	 * @param iataCode
-	 *            3 letter code
-	 * @param latitude
-	 *            in degrees
-	 * @param longitude
-	 *            in degrees
-	 *
-	 * @return the added airport
-	 */
-	public static AirportData addAirport(String iataCode, double latitude, double longitude) {
-		AirportData ad = new AirportData();
-		ad.setIata(iataCode);
-		ad.setLatitude(latitude);
-		ad.setLongitude(longitude);
-		ad.setAtmosphericInformation(new AtmosphericInformation());
-		AIRPORT_DATA.add(ad);
-		return ad;
-	}
+    /**
+     * Add a new known airport to our list.
+     *
+     * @param iataCode
+     *            3 letter code
+     * @param latitude
+     *            in degrees
+     * @param longitude
+     *            in degrees
+     *
+     * @return the added airport
+     */
+    public static AirportData addAirport(String iataCode, double latitude, double longitude) {
+        AirportData ad = new AirportData();
+        ad.setIata(iataCode);
+        ad.setLatitude(latitude);
+        ad.setLongitude(longitude);
+        ad.setAtmosphericInformation(new AtmosphericInformation());
+        AIRPORT_DATA.add(ad);
+        return ad;
+    }
 
 }

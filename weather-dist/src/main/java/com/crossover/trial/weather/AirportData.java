@@ -20,7 +20,7 @@ public class AirportData {
 
     /** longitude value in degrees */
     double longitude;
-    
+
     private AtmosphericInformation atmosphericInformation;
 
     public String getIata() {
@@ -55,22 +55,22 @@ public class AirportData {
     @Override
     public final boolean equals(Object other) {
         if (other instanceof AirportData) {
-        	return new EqualsBuilder().append(this.getIata(), ((AirportData)other).getIata()).isEquals();
+            return new EqualsBuilder().append(this.getIata(), ((AirportData) other).getIata()).isEquals();
         }
 
         return false;
     }
-    
+
     @Override
     public final int hashCode() {
-    	return new HashCodeBuilder().append(getIata()).toHashCode();
+        return new HashCodeBuilder().append(getIata()).toHashCode();
     }
 
-	public AtmosphericInformation getAtmosphericInformation() {
-		return atmosphericInformation;
-	}
+    public AtmosphericInformation getAtmosphericInformation() {
+        return atmosphericInformation;
+    }
 
-	public void setAtmosphericInformation(AtmosphericInformation atmosphericInformation) {
-		this.atmosphericInformation = atmosphericInformation;
-	}
+    public void setAtmosphericInformation(AtmosphericInformation atmosphericInformation) {
+        this.atmosphericInformation = atmosphericInformation;
+    }
 }
