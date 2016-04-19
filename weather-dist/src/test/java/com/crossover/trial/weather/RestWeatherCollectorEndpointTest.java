@@ -9,8 +9,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.crossover.trial.weather.datapointtype.DataPointType;
-
 public class RestWeatherCollectorEndpointTest {
 	@Mock
 	private AtmosphericInformation ai;
