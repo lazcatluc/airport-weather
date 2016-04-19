@@ -72,7 +72,7 @@ public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
 
 	@Override
 	public Response exit() {
-		System.exit(0);
+		WeatherServer.requestShutdown();
 		return Response.noContent().build();
 	}
 	//

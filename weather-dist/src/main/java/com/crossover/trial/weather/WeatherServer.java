@@ -24,6 +24,8 @@ import static java.lang.String.*;
 public class WeatherServer {
 
     private static final String BASE_URL = "http://localhost:9090/";
+    private static volatile boolean serverStarted = false;
+    private static boolean shutdownRequested = false;
 
     public static void main(String[] args) {
         try {
@@ -49,12 +51,26 @@ public class WeatherServer {
             // the autograder waits for this output before running automated tests, please don't remove it
             server.start();
             System.out.println(format("Weather Server started.\n url=%s\n", BASE_URL));
+            serverStarted = true;
 
             // blocks until the process is terminated
-            Thread.currentThread().join();
+        	synchronized (WeatherServer.class) {
+        		while (!shutdownRequested) {
+        			WeatherServer.class.wait(5000);
+        		}
+        	}
             server.shutdown();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(WeatherServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    protected static boolean isServerStarted() {
+    	return serverStarted;
+    }
+
+	public static synchronized void requestShutdown() {
+		shutdownRequested = true;
+		WeatherServer.class.notifyAll();
+	}
 }
