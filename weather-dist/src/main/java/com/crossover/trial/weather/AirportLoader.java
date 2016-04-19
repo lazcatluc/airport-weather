@@ -40,7 +40,7 @@ public class AirportLoader {
         return new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
     }
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         File airportDataFile = new File(args[0]);
         if (!airportDataFile.exists() || airportDataFile.length() == 0) {
             throw new FileNotFoundException(airportDataFile + " is not a valid input");
