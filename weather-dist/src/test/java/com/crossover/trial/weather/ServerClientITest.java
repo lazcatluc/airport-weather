@@ -47,7 +47,7 @@ public class ServerClientITest {
 		server.join();
 		client.join();
 
-		assertThat(baos.toString()).isEqualTo(EXPECTED_OUTPUT);
+		assertThat(baos.toString().replaceAll("\r?\n","\n")).isEqualTo(EXPECTED_OUTPUT);
 	}
 
 }
