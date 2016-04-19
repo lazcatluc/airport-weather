@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
+import com.crossover.trial.weather.run.WeatherServer;
 import com.google.gson.Gson;
 
 /**

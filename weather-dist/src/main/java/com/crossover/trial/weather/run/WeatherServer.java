@@ -1,9 +1,12 @@
-package com.crossover.trial.weather;
+package com.crossover.trial.weather.run;
 
 import org.glassfish.grizzly.Connection;
 import org.glassfish.grizzly.http.server.*;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+
+import com.crossover.trial.weather.RestWeatherCollectorEndpoint;
+import com.crossover.trial.weather.RestWeatherQueryEndpoint;
 
 import java.io.IOException;
 import java.net.URI;

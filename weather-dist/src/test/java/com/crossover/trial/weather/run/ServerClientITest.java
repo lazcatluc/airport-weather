@@ -1,4 +1,4 @@
-package com.crossover.trial.weather;
+package com.crossover.trial.weather.run;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,6 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.junit.Test;
+
+import com.crossover.trial.weather.RestWeatherQueryEndpoint;
+import com.crossover.trial.weather.run.WeatherClient;
+import com.crossover.trial.weather.run.WeatherServer;
 
 public class ServerClientITest {
 	
@@ -28,7 +32,7 @@ public class ServerClientITest {
 			"/query/weather/MMU/0\n"+
 			"query.MMU.0: [{\"temperature\":null,\"wind\":null,\"humidity\":null,\"precipitation\":null,\"pressure\":null,\"cloudCover\":null}]\n"+
 			"/query/ping\n"+
-			"query.ping: {\"iata_freq\":{\"EWR\":0.2,\"MMU\":0.2,\"LGA\":0.2,\"BOS\":0.2,\"JFK\":0.2},\"radius_freq\":[0],\"datasize\":0}\n"+
+			"query.ping: {\"iata_freq\":{\"EWR\":0.2,\"MMU\":0.2,\"LGA\":0.2,\"BOS\":0.2,\"JFK\":0.2},\"radius_freq\":[5],\"datasize\":0}\n"+
 			"/collect/exit\n"+
 			"complete";	
 

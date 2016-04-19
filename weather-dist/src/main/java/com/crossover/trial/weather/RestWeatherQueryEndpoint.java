@@ -130,8 +130,8 @@ public class RestWeatherQueryEndpoint implements WeatherQueryEndpoint {
      */
     public void updateRequestFrequency(String iata, Double radius) {
         AirportData airportData = findAirportData(iata);
-        REQUEST_FREQUENCY.put(airportData, REQUEST_FREQUENCY.getOrDefault(airportData, 0) + 1);
-        RADIUS_FREQUENCIES.put(radius, RADIUS_FREQUENCIES.getOrDefault(radius, 0));
+        REQUEST_FREQUENCY.merge(airportData, 1, Integer::sum);
+        RADIUS_FREQUENCIES.merge(radius, 1, Integer::sum);
     }
 
     /**
@@ -166,7 +166,7 @@ public class RestWeatherQueryEndpoint implements WeatherQueryEndpoint {
     /**
      * A dummy init method that loads hard coded data
      */
-    protected static void init() {
+    public static void init() {
         AIRPORT_DATA.clear();
         REQUEST_FREQUENCY.clear();
         RADIUS_FREQUENCIES.clear();

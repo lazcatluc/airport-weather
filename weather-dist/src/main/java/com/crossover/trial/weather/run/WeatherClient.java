@@ -1,4 +1,4 @@
-package com.crossover.trial.weather;
+package com.crossover.trial.weather.run;
 
 import java.io.PrintStream;
 import java.util.logging.Level;
@@ -9,6 +9,9 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.crossover.trial.weather.DataPoint;
+import com.crossover.trial.weather.DataPoint.Builder;
 
 /**
  * A reference implementation for the weather client. Consumers of the REST API
