@@ -28,15 +28,15 @@ public interface WeatherCollectorEndpoint {
      *
      * @param iataCode the 3 letter airport code
      * @param pointType the point type, {@link DataPointType} for a complete list
-     * @param datapointJson a json dict containing mean, first, second, thrid and count keys
+     * @param datapointJson a json dict containing mean, first, second, third and count keys
      *
      * @return HTTP Response code
      */
     @POST
     @Path("/weather/{iata}/{pointType}")
-    Response updateWeather(@PathParam("iata") String iataCode,
-                           @PathParam("pointType") String pointType,
-                           String datapointJson);
+    Response updateWeather(
+            @PathParam("iata") String iataCode, @PathParam("pointType") String pointType, 
+            String datapointJson);
 
     /**
      * Return a list of known airports as a json formatted list

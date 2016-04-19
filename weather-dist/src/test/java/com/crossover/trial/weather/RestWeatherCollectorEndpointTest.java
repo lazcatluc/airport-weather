@@ -29,7 +29,7 @@ public class RestWeatherCollectorEndpointTest {
 		pointType = DataPointType.WIND;
 	}
 	
-	private void updateAtmosphericInformation() throws WeatherException {
+	private void updateAtmosphericInformation() {
 		restWeatherCollectorEndpoint.updateAtmosphericInformation(ai, pointType.name(), dp);
 	}
 	

@@ -34,6 +34,7 @@ public class ServerClientITest {
 
 	@Test
 	public void clientCallsServer() throws InterruptedException {
+		RestWeatherQueryEndpoint.init();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(baos));
 		Thread server = new Thread(() -> WeatherServer.main(new String[]{}));
