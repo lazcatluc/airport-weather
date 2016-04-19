@@ -1,18 +1,14 @@
 package com.crossover.trial.weather;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import com.google.gson.Gson;
 
 /**
  * A reference implementation for the weather client. Consumers of the REST API can look at WeatherClient
@@ -23,6 +19,7 @@ import com.google.gson.Gson;
  */
 public class WeatherClient {
 
+	public static final Logger LOGGER = Logger.getLogger(WeatherClient.class.getName());
     private static final String BASE_URI = "http://localhost:9090";
 
     /** end point for read queries */
@@ -69,8 +66,8 @@ public class WeatherClient {
     public void exit() {
         try {
             collect.path("/exit").request().get();
-        } catch (Throwable t) {
-            // swallow
+        } catch (RuntimeException e) {
+        	LOGGER.log(Level.SEVERE, e, e::getMessage);
         }
     }
 
