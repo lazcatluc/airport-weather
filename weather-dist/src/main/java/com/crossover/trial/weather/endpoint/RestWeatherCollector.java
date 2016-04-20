@@ -1,7 +1,4 @@
-package com.crossover.trial.weather;
-
-import static com.crossover.trial.weather.RestWeatherQueryEndpoint.AIRPORT_DATA;
-import static com.crossover.trial.weather.RestWeatherQueryEndpoint.findAirportData;
+package com.crossover.trial.weather.endpoint;
 
 import java.util.stream.Collectors;
 
@@ -9,7 +6,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
-import com.crossover.trial.weather.run.WeatherServer;
+import com.crossover.trial.weather.WeatherConfiguration;
+import com.crossover.trial.weather.airport.AirportData;
+import com.crossover.trial.weather.airport.Airports;
+import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
+import com.crossover.trial.weather.atmosphere.DataPoint;
+import com.crossover.trial.weather.atmosphere.DataPointType;
 import com.google.gson.Gson;
 
 /**
@@ -20,11 +22,17 @@ import com.google.gson.Gson;
  */
 
 @Path("/collect")
-public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
+public class RestWeatherCollector implements WeatherCollector {
 
     /** shared gson json to object factory */
     public static final Gson GSON = new Gson();
-
+    
+    private final Airports airports;
+    
+    public RestWeatherCollector() {
+        this.airports = WeatherConfiguration.AIRPORTS;
+    }
+    
     @Override
     public Response ping() {
         return Response.status(Response.Status.OK).entity("ready").build();
@@ -42,18 +50,18 @@ public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
     @Override
     public Response getAirports() {
         return Response.status(Response.Status.OK)
-                .entity(AIRPORT_DATA.stream().map(AirportData::getIata).collect(Collectors.toSet())).build();
+                .entity(airports.streamAll().map(AirportData::getIata).collect(Collectors.toSet())).build();
     }
 
     @Override
     public Response getAirport(@PathParam("iata") String iata) {
-        return Response.status(Response.Status.OK).entity(findAirportData(iata)).build();
+        return Response.status(Response.Status.OK).entity(airports.find(iata)).build();
     }
 
     @Override
     public Response addAirport(@PathParam("iata") String iata, @PathParam("lat") String latString,
             @PathParam("long") String longString) {
-        addAirport(iata, Double.valueOf(latString), Double.valueOf(longString));
+        airports.addAirport(iata, Double.valueOf(latString), Double.valueOf(longString));
         return Response.status(Response.Status.OK).build();
     }
 
@@ -64,7 +72,7 @@ public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
 
     @Override
     public Response exit() {
-        WeatherServer.requestShutdown();
+        WeatherConfiguration.requestShutdown();
         return Response.noContent().build();
     }
     //
@@ -85,33 +93,13 @@ public class RestWeatherCollectorEndpoint implements WeatherCollectorEndpoint {
      *             if the update can not be completed
      */
     public void addDataPoint(String iataCode, String pointType, DataPoint dp) {
-        updateAtmosphericInformation(findAirportData(iataCode).getAtmosphericInformation(), pointType, dp);
+        updateAtmosphericInformation(airports.find(iataCode).getAtmosphericInformation(), pointType, dp);
     }
 
     public void updateAtmosphericInformation(AtmosphericInformation ai, String pointType, DataPoint dp) {
         DataPointType.valueOf(pointType.toUpperCase()).update(ai, dp);
     }
 
-    /**
-     * Add a new known airport to our list.
-     *
-     * @param iataCode
-     *            3 letter code
-     * @param latitude
-     *            in degrees
-     * @param longitude
-     *            in degrees
-     *
-     * @return the added airport
-     */
-    public static AirportData addAirport(String iataCode, double latitude, double longitude) {
-        AirportData ad = new AirportData();
-        ad.setIata(iataCode);
-        ad.setLatitude(latitude);
-        ad.setLongitude(longitude);
-        ad.setAtmosphericInformation(new AtmosphericInformation());
-        AIRPORT_DATA.add(ad);
-        return ad;
-    }
+    
 
 }

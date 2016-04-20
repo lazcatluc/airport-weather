@@ -1,7 +1,9 @@
-package com.crossover.trial.weather;
+package com.crossover.trial.weather.atmosphere;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * encapsulates sensor information for a particular location
@@ -89,13 +91,14 @@ public class AtmosphericInformation {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    protected boolean hasInformation() {
+    public boolean hasInformation() {
         return Arrays
                 .asList(getCloudCover(), getHumidity(), getPrecipitation(), getPressure(), getTemperature(), getWind())
                 .stream().anyMatch(dp -> dp != null);
     }
 
-    protected boolean isUpdatedInTheLastDay() {
+    @JsonIgnore
+    public boolean isUpdatedInTheLastDay() {
         return getLastUpdateTime() > System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS);
     }
 }

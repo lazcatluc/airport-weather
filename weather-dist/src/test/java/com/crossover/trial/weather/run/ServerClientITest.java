@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 import org.junit.Test;
 
-import com.crossover.trial.weather.RestWeatherQueryEndpoint;
+import com.crossover.trial.weather.WeatherConfiguration;
 import com.crossover.trial.weather.run.WeatherClient;
 import com.crossover.trial.weather.run.WeatherServer;
 
@@ -38,12 +38,12 @@ public class ServerClientITest {
 
 	@Test
 	public void clientCallsServer() throws InterruptedException {
-		RestWeatherQueryEndpoint.init();
+	    WeatherConfiguration.init();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(baos));
 		Thread server = new Thread(() -> WeatherServer.main(new String[]{}));
 		server.start();
-		while (!WeatherServer.isServerStarted()) {
+		while (!WeatherConfiguration.isServerStarted()) {
 			Thread.sleep(1000);
 		}
 		Thread client = new Thread(() -> WeatherClient.main(new String[]{}));

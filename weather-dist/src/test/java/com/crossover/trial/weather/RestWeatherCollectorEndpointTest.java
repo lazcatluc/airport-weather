@@ -9,6 +9,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
+import com.crossover.trial.weather.atmosphere.DataPoint;
+import com.crossover.trial.weather.atmosphere.DataPointType;
+import com.crossover.trial.weather.endpoint.RestWeatherCollector;
+
 public class RestWeatherCollectorEndpointTest {
 	@Mock
 	private AtmosphericInformation ai;
@@ -18,11 +23,11 @@ public class RestWeatherCollectorEndpointTest {
 	@Mock
 	private DataPoint dp;
 	
-	private RestWeatherCollectorEndpoint restWeatherCollectorEndpoint;
+	private RestWeatherCollector restWeatherCollectorEndpoint;
 	
 	@Before
 	public void setUp() {
-		restWeatherCollectorEndpoint = new RestWeatherCollectorEndpoint();
+		restWeatherCollectorEndpoint = new RestWeatherCollector();
 		MockitoAnnotations.initMocks(this);
 		pointType = DataPointType.WIND;
 	}

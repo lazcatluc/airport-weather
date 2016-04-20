@@ -1,15 +1,18 @@
-package com.crossover.trial.weather;
+package com.crossover.trial.weather.endpoint;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.crossover.trial.weather.airport.AirportData;
+import com.crossover.trial.weather.atmosphere.DataPointType;
 
 /**
  * The interface shared to airport weather collection systems.
  *
  * @author code test administartor
  */
-public interface WeatherCollectorEndpoint {
+public interface WeatherCollector {
 
     /**
      * A liveliness check for the collection endpoint.

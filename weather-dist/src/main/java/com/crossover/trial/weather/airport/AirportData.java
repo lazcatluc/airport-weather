@@ -1,9 +1,11 @@
-package com.crossover.trial.weather;
+package com.crossover.trial.weather.airport;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
 
 /**
  * Basic airport information.
@@ -16,10 +18,10 @@ public class AirportData {
     private String iata;
 
     /** latitude value in degrees */
-    double latitude;
+    private double latitude;
 
     /** longitude value in degrees */
-    double longitude;
+    private double longitude;
 
     private AtmosphericInformation atmosphericInformation;
 

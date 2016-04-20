@@ -10,8 +10,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.crossover.trial.weather.DataPoint;
-import com.crossover.trial.weather.DataPoint.Builder;
+import com.crossover.trial.weather.WeatherConfiguration;
+import com.crossover.trial.weather.atmosphere.DataPoint;
 
 /**
  * A reference implementation for the weather client. Consumers of the REST API
@@ -23,7 +23,6 @@ import com.crossover.trial.weather.DataPoint.Builder;
 public class WeatherClient {
 
     private static final Logger LOGGER = Logger.getLogger(WeatherClient.class.getName());
-    private static final String BASE_URI = "http://localhost:9090";
 
     /** end point for read queries */
     private final WebTarget query;
@@ -35,8 +34,8 @@ public class WeatherClient {
     private final PrintStream printStream;
 
     public WeatherClient(PrintStream printStream) {
-        query = ClientBuilder.newClient().target(BASE_URI + "/query");
-        collect = ClientBuilder.newClient().target(BASE_URI + "/collect");
+        query = ClientBuilder.newClient().target(WeatherConfiguration.BASE_URL + "query");
+        collect = ClientBuilder.newClient().target(WeatherConfiguration.BASE_URL + "collect");
         this.printStream = printStream;
     }
 

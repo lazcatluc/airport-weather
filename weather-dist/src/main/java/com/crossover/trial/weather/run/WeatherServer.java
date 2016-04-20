@@ -1,19 +1,21 @@
 package com.crossover.trial.weather.run;
 
-import org.glassfish.grizzly.Connection;
-import org.glassfish.grizzly.http.server.*;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
-
-import com.crossover.trial.weather.RestWeatherCollectorEndpoint;
-import com.crossover.trial.weather.RestWeatherQueryEndpoint;
+import static java.lang.String.format;
 
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.lang.String.*;
+import org.glassfish.grizzly.Connection;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.HttpServerFilter;
+import org.glassfish.grizzly.http.server.HttpServerProbe;
+import org.glassfish.grizzly.http.server.Request;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+
+import com.crossover.trial.weather.WeatherConfiguration;
+import com.crossover.trial.weather.endpoint.Resources;
 
 /**
  * This main method will be use by the automated functional grader. You
@@ -24,23 +26,16 @@ import static java.lang.String.*;
  */
 public class WeatherServer {
 
-    private static final String BASE_URL = "http://localhost:9090/";
-    private static volatile boolean serverStarted = false;
-    private static boolean shutdownRequested = false;
-
     private WeatherServer() {
 
     }
 
     public static void main(String[] args) {
         try {
-            System.out.println("Starting Weather App local testing server: " + BASE_URL);
+            System.out.println("Starting Weather App local testing server: " + WeatherConfiguration.BASE_URL);
 
-            final ResourceConfig resourceConfig = new ResourceConfig();
-            resourceConfig.register(RestWeatherCollectorEndpoint.class);
-            resourceConfig.register(RestWeatherQueryEndpoint.class);
-
-            HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URL), resourceConfig, false);
+            HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(WeatherConfiguration.BASE_URL),
+                    Resources.newResourceConfig(), false);
             Runtime.getRuntime().addShutdownHook(new Thread(() -> server.shutdownNow()));
 
             HttpServerProbe probe = new HttpServerProbe.Adapter() {
@@ -54,27 +49,16 @@ public class WeatherServer {
             // the autograder waits for this output before running automated
             // tests, please don't remove it
             server.start();
-            System.out.println(format("Weather Server started.%n url=%s%n", BASE_URL));
-            serverStarted = true;
+            System.out.println(format("Weather Server started.%n url=%s%n", WeatherConfiguration.BASE_URL));
+            WeatherConfiguration.setServerStarted(true);
 
             // blocks until the process is terminated
-            synchronized (WeatherServer.class) {
-                while (!shutdownRequested) {
-                    WeatherServer.class.wait(5000);
-                }
-            }
+            WeatherConfiguration.waitForShutdownRequest();
             server.shutdown();
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(WeatherServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    protected static boolean isServerStarted() {
-        return serverStarted;
-    }
-
-    public static synchronized void requestShutdown() {
-        shutdownRequested = true;
-        WeatherServer.class.notifyAll();
-    }
+ 
 }
