@@ -8,8 +8,8 @@ import java.io.PrintStream;
 import org.junit.Test;
 
 import com.crossover.trial.weather.WeatherClient;
-import com.crossover.trial.weather.WeatherConfiguration;
 import com.crossover.trial.weather.WeatherServer;
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 
 public class ServerClientITest {
 	

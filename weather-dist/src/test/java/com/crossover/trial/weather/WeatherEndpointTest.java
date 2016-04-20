@@ -3,6 +3,7 @@ package com.crossover.trial.weather;
 import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
 import com.crossover.trial.weather.atmosphere.DataPoint;
 import com.crossover.trial.weather.atmosphere.DataPoint.Builder;
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 import com.crossover.trial.weather.endpoint.RestWeatherCollector;
 import com.crossover.trial.weather.endpoint.RestWeatherQuery;
 import com.crossover.trial.weather.endpoint.WeatherCollector;

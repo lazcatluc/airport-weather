@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.crossover.trial.weather.WeatherConfiguration;
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 
 import java.io.*;
 import java.text.DecimalFormat;

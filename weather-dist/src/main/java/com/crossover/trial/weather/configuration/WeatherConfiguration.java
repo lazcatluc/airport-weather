@@ -1,4 +1,4 @@
-package com.crossover.trial.weather;
+package com.crossover.trial.weather.configuration;
 
 import com.crossover.trial.weather.airport.Airports;
 import com.crossover.trial.weather.airport.AirportsInMemory;

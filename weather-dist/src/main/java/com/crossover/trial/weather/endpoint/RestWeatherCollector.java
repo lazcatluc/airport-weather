@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-import com.crossover.trial.weather.WeatherConfiguration;
 import com.crossover.trial.weather.airport.AirportData;
 import com.crossover.trial.weather.airport.Airports;
 import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
 import com.crossover.trial.weather.atmosphere.DataPoint;
 import com.crossover.trial.weather.atmosphere.DataPointType;
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 import com.google.gson.Gson;
 
 /**

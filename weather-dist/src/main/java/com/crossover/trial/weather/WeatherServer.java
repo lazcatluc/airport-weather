@@ -14,6 +14,7 @@ import org.glassfish.grizzly.http.server.HttpServerProbe;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 import com.crossover.trial.weather.endpoint.Resources;
 
 /**

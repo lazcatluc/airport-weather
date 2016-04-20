@@ -4,8 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.crossover.trial.weather.WeatherConfiguration;
 import com.crossover.trial.weather.WeatherServer;
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 
 public class AirportLoaderITest {
     

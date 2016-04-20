@@ -11,11 +11,11 @@ import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.crossover.trial.weather.WeatherConfiguration;
 import com.crossover.trial.weather.airport.AirportData;
 import com.crossover.trial.weather.airport.Airports;
 import com.crossover.trial.weather.airport.Distance;
 import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 import com.crossover.trial.weather.statistics.Statistics;
 import com.google.gson.Gson;
 

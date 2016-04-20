@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.crossover.trial.weather.atmosphere.DataPoint;
+import com.crossover.trial.weather.configuration.WeatherConfiguration;
 
 /**
  * A reference implementation for the weather client. Consumers of the REST API
