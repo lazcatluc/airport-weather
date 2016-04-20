@@ -16,6 +16,10 @@ public class WeatherConfiguration {
     private static volatile boolean serverStarted;
     private static boolean shutdownRequested;
 
+    static {
+        init();
+    }
+    
     private WeatherConfiguration() {
         
     }
