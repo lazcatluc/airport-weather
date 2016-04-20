@@ -38,12 +38,12 @@ public class AtmosphericInformationUpdater {
     }
 
     private boolean isMeanInRange(double mean) {
-        return mean >= minimumMean && mean <= maximumMean;
+        return mean >= minimumMean && mean < maximumMean;
     }
 
     public static class Builder {
         private double minimumMean = 0d;
-        private double maximumMean = 99.99d;
+        private double maximumMean = 100d;
         private BiConsumer<AtmosphericInformation, DataPoint> updater = AtmosphericInformation::setCloudCover;
 
         public Builder withMeanFrom(double minimumMean) {
@@ -51,7 +51,7 @@ public class AtmosphericInformationUpdater {
             return this;
         }
 
-        public Builder withMeanUpTo(double maximumMean) {
+        public Builder withMeanLessThan(double maximumMean) {
             this.maximumMean = maximumMean;
             return this;
         }

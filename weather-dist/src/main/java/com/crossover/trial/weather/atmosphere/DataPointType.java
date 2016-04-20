@@ -7,12 +7,12 @@ package com.crossover.trial.weather.atmosphere;
  */
 public enum DataPointType {
     WIND(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setWind)
-            .withMeanUpTo(Double.MAX_VALUE).build()), 
+            .withMeanLessThan(Double.POSITIVE_INFINITY).build()), 
     TEMPERATURE(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setTemperature)
             .withMeanFrom(-50).build()), 
     HUMIDTY(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setHumidity).build()), 
     PRESSURE(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setPressure)
-            .withMeanFrom(650).withMeanUpTo(799.99).build()), 
+            .withMeanFrom(650).withMeanLessThan(800).build()), 
     CLOUDCOVER(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setCloudCover).build()), 
     PRECIPITATION(new AtmosphericInformationUpdater.Builder().updating(AtmosphericInformation::setPrecipitation).build());
 
