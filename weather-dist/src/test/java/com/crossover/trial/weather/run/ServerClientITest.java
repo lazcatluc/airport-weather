@@ -33,6 +33,12 @@ public class ServerClientITest {
 			"query.MMU.0: [{\"temperature\":null,\"wind\":null,\"humidity\":null,\"precipitation\":null,\"pressure\":null,\"cloudCover\":null}]\n"+
 			"/query/ping\n"+
 			"query.ping: {\"iata_freq\":{\"EWR\":0.2,\"MMU\":0.2,\"LGA\":0.2,\"BOS\":0.2,\"JFK\":0.2},\"radius_freq\":[5],\"datasize\":1}\n"+
+            "/collect/airports\n"+
+            "collect.airports: [\"EWR\",\"MMU\",\"BOS\",\"LGA\",\"JFK\"]\n"+
+            "/collect/airport/BOS\n"+
+            "delete: 200\n"+
+            "/collect/airports\n"+
+			"collect.airports: [\"EWR\",\"MMU\",\"LGA\",\"JFK\"]\n"+
 			"/collect/exit\n"+
 			"complete";	
 

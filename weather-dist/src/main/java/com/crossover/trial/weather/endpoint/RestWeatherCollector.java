@@ -64,7 +64,8 @@ public class RestWeatherCollector implements WeatherCollector {
 
     @Override
     public Response deleteAirport(String iata) {
-        return Response.status(Response.Status.NOT_IMPLEMENTED).build();
+        airports.delete(iata);
+        return Response.status(Response.Status.OK).build();
     }
 
     @Override

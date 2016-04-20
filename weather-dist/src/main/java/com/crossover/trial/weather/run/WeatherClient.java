@@ -57,6 +57,16 @@ public class WeatherClient {
         printStream.println("query.ping: " + response.readEntity(String.class));
     }
 
+    public void delete(String iata) {
+        Response response = collect.path("/airport/"+iata).request().delete();
+        printStream.println("delete: " + response.getStatus());
+    }
+    
+    public void collectAirports() {
+        Response response = collect.path("/airports").request().get();
+        printStream.println("collect.airports: " + response.readEntity(String.class));
+    }
+    
     public void populate(String pointType, int first, int last, int mean, int median, int count) {
         WebTarget path = collect.path("/weather/BOS/" + pointType);
         DataPoint dp = new DataPoint.Builder().withFirst(first).withLast(last).withMean(mean).withMedian(median)
@@ -84,6 +94,9 @@ public class WeatherClient {
         wc.query("MMU");
 
         wc.pingQuery();
+        wc.collectAirports();
+        wc.delete("BOS");
+        wc.collectAirports();
         wc.exit();
         System.out.print("complete");
     }

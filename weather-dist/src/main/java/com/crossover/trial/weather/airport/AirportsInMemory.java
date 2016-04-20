@@ -23,8 +23,10 @@ public class AirportsInMemory implements Airports {
     }
 
     @Override
-    public void delete(AirportData airport) {
-        AIRPORT_DATA.remove(airport);
+    public void delete(String iata) {
+        AirportData dummy = new AirportData();
+        dummy.setIata(iata);
+        AIRPORT_DATA.remove(dummy);
     }
     
     /**
