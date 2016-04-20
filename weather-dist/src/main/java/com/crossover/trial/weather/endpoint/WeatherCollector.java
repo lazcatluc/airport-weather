@@ -38,7 +38,7 @@ public interface WeatherCollector {
      * @return HTTP Response code
      */
     @POST
-    @Path("/weather/{iata}/{pointType}")
+    @Path("/weather/{iata}/{pointType}")      
     Response updateWeather(
             @PathParam("iata") String iataCode, @PathParam("pointType") String pointType, 
             String datapointJson);
@@ -72,7 +72,7 @@ public interface WeatherCollector {
      * @param longString the airport's longitude in degrees as a string [-180, 180]
      * @return HTTP Response code for the add operation
      */
-    @POST
+    @POST    
     @Path("/airport/{iata}/{lat}/{long}")
     Response addAirport(@PathParam("iata") String iata,
                         @PathParam("lat") String latString,

@@ -22,7 +22,7 @@ public class ServerClientITest {
 			"collect.ping: ready\n"+
 			"/collect/weather/BOS/wind\n"+
 			"/query/weather/BOS/0\n"+
-			"query.BOS.0: [{\"temperature\":null,\"wind\":null,\"humidity\":null,\"precipitation\":null,\"pressure\":null,\"cloudCover\":null}]\n"+
+			"query.BOS.0: [{\"temperature\":null,\"wind\":{\"mean\":6.0,\"first\":0,\"second\":4,\"third\":10,\"count\":20},\"humidity\":null,\"precipitation\":null,\"pressure\":null,\"cloudCover\":null}]\n"+
 			"/query/weather/JFK/0\n"+
 			"query.JFK.0: [{\"temperature\":null,\"wind\":null,\"humidity\":null,\"precipitation\":null,\"pressure\":null,\"cloudCover\":null}]\n"+
 			"/query/weather/EWR/0\n"+
@@ -32,7 +32,7 @@ public class ServerClientITest {
 			"/query/weather/MMU/0\n"+
 			"query.MMU.0: [{\"temperature\":null,\"wind\":null,\"humidity\":null,\"precipitation\":null,\"pressure\":null,\"cloudCover\":null}]\n"+
 			"/query/ping\n"+
-			"query.ping: {\"iata_freq\":{\"EWR\":0.2,\"MMU\":0.2,\"LGA\":0.2,\"BOS\":0.2,\"JFK\":0.2},\"radius_freq\":[5],\"datasize\":0}\n"+
+			"query.ping: {\"iata_freq\":{\"EWR\":0.2,\"MMU\":0.2,\"LGA\":0.2,\"BOS\":0.2,\"JFK\":0.2},\"radius_freq\":[5],\"datasize\":1}\n"+
 			"/collect/exit\n"+
 			"complete";	
 

@@ -4,7 +4,6 @@ import com.crossover.trial.weather.airport.Airports;
 import com.crossover.trial.weather.airport.AirportsInMemory;
 import com.crossover.trial.weather.airport.Distance;
 import com.crossover.trial.weather.airport.Haversine;
-import com.crossover.trial.weather.run.WeatherServer;
 import com.crossover.trial.weather.statistics.Statistics;
 import com.crossover.trial.weather.statistics.StatisticsInMemory;
 
@@ -14,16 +13,18 @@ public class WeatherConfiguration {
     public static final Statistics STATISTICS = new StatisticsInMemory(AIRPORTS);
     public static final Distance DISTANCE_CALCULATOR = new Haversine();
 
-    private static volatile boolean serverStarted = false;
-    private static boolean shutdownRequested = false;
-    
-    static {
-        init();
+    private static volatile boolean serverStarted;
+    private static boolean shutdownRequested;
+
+    private WeatherConfiguration() {
+        
     }
     
-    public static void init() {
+    public static synchronized void init() {
         AIRPORTS.init();
         STATISTICS.init();
+        serverStarted = false;
+        shutdownRequested = false;
     }
 
     public static void setServerStarted(boolean serverStarted) {
