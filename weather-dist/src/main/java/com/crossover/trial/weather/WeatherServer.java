@@ -1,4 +1,4 @@
-package com.crossover.trial.weather.run;
+package com.crossover.trial.weather;
 
 import static java.lang.String.format;
 
@@ -14,7 +14,6 @@ import org.glassfish.grizzly.http.server.HttpServerProbe;
 import org.glassfish.grizzly.http.server.Request;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 
-import com.crossover.trial.weather.WeatherConfiguration;
 import com.crossover.trial.weather.endpoint.Resources;
 
 /**

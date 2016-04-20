@@ -1,4 +1,4 @@
-package com.crossover.trial.weather.run;
+package com.crossover.trial.weather;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,9 +7,9 @@ import java.io.PrintStream;
 
 import org.junit.Test;
 
+import com.crossover.trial.weather.WeatherClient;
 import com.crossover.trial.weather.WeatherConfiguration;
-import com.crossover.trial.weather.run.WeatherClient;
-import com.crossover.trial.weather.run.WeatherServer;
+import com.crossover.trial.weather.WeatherServer;
 
 public class ServerClientITest {
 	

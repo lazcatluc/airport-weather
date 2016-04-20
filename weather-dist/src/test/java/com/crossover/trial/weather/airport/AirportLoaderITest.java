@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.crossover.trial.weather.WeatherConfiguration;
-import com.crossover.trial.weather.run.WeatherServer;
+import com.crossover.trial.weather.WeatherServer;
 
 public class AirportLoaderITest {
     
