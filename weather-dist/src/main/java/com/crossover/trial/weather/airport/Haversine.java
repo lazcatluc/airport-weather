@@ -1,27 +1,46 @@
 package com.crossover.trial.weather.airport;
 
+import static java.lang.Math.asin;
+import static java.lang.Math.cos;
+import static java.lang.Math.pow;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
+import static java.lang.Math.toRadians;
+
+import java.util.function.ToDoubleFunction;
+
 public class Haversine implements Distance {
 
     /** earth radius in KM */
-    public static final double EARTH_RADIUS = 6372.8;    
+    public static final double EARTH_RADIUS = 6371;    
 
     /**
      * Haversine distance between two airports.
      *
-     * @param ad1
+     * @param from
      *            airport 1
-     * @param ad2
+     * @param to
      *            airport 2
      * @return the distance in KM
      */
     @Override
-    public double between(AirportData ad1, AirportData ad2) {
-        double deltaLat = Math.toRadians(ad2.getLatitude() - ad1.getLatitude());
-        double deltaLon = Math.toRadians(ad2.getLongitude() - ad1.getLongitude());
-        double a = Math.pow(Math.sin(deltaLat / 2), 2)
-                + Math.pow(Math.sin(deltaLon / 2), 2) * Math.cos(ad1.getLatitude()) * Math.cos(ad2.getLatitude());
-        double c = 2 * Math.asin(Math.sqrt(a));
-        return EARTH_RADIUS * c;
+    public double between(AirportData from, AirportData to) {
+        return 2 * EARTH_RADIUS * asin(sqrt(
+                haversine(this::latitudeRadians, from, to) + 
+                haversine(this::longitudeRadians, from, to) * cos(latitudeRadians(from)) * cos(latitudeRadians(to))));
+    }
+    
+    protected double latitudeRadians(AirportData airportData) {
+        return toRadians(airportData.getLatitude());
+    }
+
+    protected double longitudeRadians(AirportData airportData) {
+        return toRadians(airportData.getLongitude());
+    }
+    
+    protected double haversine(ToDoubleFunction<AirportData> func, AirportData from, AirportData to) {
+        double delta = func.applyAsDouble(to) - func.applyAsDouble(from);
+        return pow(sin(delta / 2), 2);
     }
 
 }
