@@ -11,4 +11,13 @@ public class AirportDataTest {
         assertThat(new AirportData().equals(null)).isFalse();
     }
 
+    @Test
+    public void airportDataIsEqualToOneWithTheSameIataCode() {
+        AirportData airportData1 = new AirportData();
+        AirportData airportData2 = new AirportData();
+        airportData1.setIata("iata");
+        airportData2.setIata("iata");
+        
+        assertThat(airportData1).isEqualTo(airportData2);
+    }
 }

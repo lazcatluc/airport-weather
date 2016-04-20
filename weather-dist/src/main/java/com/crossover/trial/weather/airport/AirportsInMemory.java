@@ -1,32 +1,29 @@
 package com.crossover.trial.weather.airport;
 
-import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-
-import org.eclipse.jetty.util.ConcurrentHashSet;
 
 import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
 
 public class AirportsInMemory implements Airports {
 
     /** all known airports */
-    private static final Set<AirportData> AIRPORT_DATA = new ConcurrentHashSet<>();
+    private static final Map<String, AirportData> AIRPORT_DATA = new ConcurrentHashMap<>();
     
     @Override
     public Stream<AirportData> streamAll() {
-        return AIRPORT_DATA.stream();
+        return AIRPORT_DATA.values().stream();
     }
 
     @Override
     public AirportData find(String iataCode) {
-        return AIRPORT_DATA.stream().filter(ap -> ap.getIata().equals(iataCode)).findFirst().orElse(null);
+        return AIRPORT_DATA.get(iataCode);
     }
 
     @Override
     public void delete(String iata) {
-        AirportData dummy = new AirportData();
-        dummy.setIata(iata);
-        AIRPORT_DATA.remove(dummy);
+        AIRPORT_DATA.remove(iata);
     }
     
     /**
@@ -48,7 +45,7 @@ public class AirportsInMemory implements Airports {
         ad.setLatitude(latitude);
         ad.setLongitude(longitude);
         ad.setAtmosphericInformation(new AtmosphericInformation());
-        AIRPORT_DATA.add(ad);
+        AIRPORT_DATA.put(iataCode, ad);
         return ad;
     }    
 
