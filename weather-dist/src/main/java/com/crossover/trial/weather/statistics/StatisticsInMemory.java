@@ -1,8 +1,8 @@
 package com.crossover.trial.weather.statistics;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import com.crossover.trial.weather.airport.AirportData;
@@ -10,6 +10,8 @@ import com.crossover.trial.weather.airport.Airports;
 import com.crossover.trial.weather.atmosphere.AtmosphericInformation;
 
 public class StatisticsInMemory implements Statistics {
+
+    private static final int HISTOGRAM_INTERVAL = 10;
 
     /**
      * Internal performance counter to better understand most requested
@@ -19,9 +21,9 @@ public class StatisticsInMemory implements Statistics {
      * using a REST request and aggregate with other performance metrics
      * {@link #ping()}
      */
-    private static final Map<AirportData, Integer> REQUEST_FREQUENCY = new HashMap<AirportData, Integer>();
+    private static final Map<AirportData, Integer> REQUEST_FREQUENCY = new ConcurrentHashMap<AirportData, Integer>();
 
-    private static final Map<Double, Integer> RADIUS_FREQUENCIES = new HashMap<Double, Integer>();
+    private static final Map<Double, Integer> RADIUS_FREQUENCIES = new ConcurrentHashMap<Double, Integer>();
     
     private final Airports airports;
     
@@ -40,7 +42,7 @@ public class StatisticsInMemory implements Statistics {
     }
 
     protected void increaseHistogramEntry(int[] histogram, Entry<Double, Integer> entry) {
-        histogram[entry.getKey().intValue() % 10] += entry.getValue();
+        histogram[entry.getKey().intValue() % HISTOGRAM_INTERVAL] += entry.getValue();
     }
 
     protected int maximumRadiusFrequency() {
@@ -49,8 +51,9 @@ public class StatisticsInMemory implements Statistics {
 
     @Override
     public Map<String, Double> requestFrequecies() {
+        int size = REQUEST_FREQUENCY.size();
         return airports.streamAll().collect(Collectors.toMap(AirportData::getIata,
-                data -> (double) REQUEST_FREQUENCY.getOrDefault(data, 0) / REQUEST_FREQUENCY.size()));
+                data -> size == 0 ? 0 : REQUEST_FREQUENCY.getOrDefault(data, 0).doubleValue() / size));
     }
     
     @Override

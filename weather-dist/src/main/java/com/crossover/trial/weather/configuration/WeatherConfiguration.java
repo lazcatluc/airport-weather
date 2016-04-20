@@ -46,7 +46,7 @@ public class WeatherConfiguration {
     
     public static synchronized void waitForShutdownRequest() throws InterruptedException {
         while (!shutdownRequested) {
-            WeatherConfiguration.class.wait(5000);
+            WeatherConfiguration.class.wait();
         }
     }
 }

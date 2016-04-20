@@ -12,7 +12,7 @@ import java.util.function.ToDoubleFunction;
 public class Haversine implements Distance {
 
     /** earth radius in KM */
-    public static final double EARTH_RADIUS = 6371;    
+    public static final double EARTH_RADIUS_KILOMETERS = 6371;    
 
     /**
      * Haversine distance between two airports.
@@ -25,7 +25,7 @@ public class Haversine implements Distance {
      */
     @Override
     public double between(AirportData from, AirportData to) {
-        return 2 * EARTH_RADIUS * asin(sqrt(
+        return 2 * EARTH_RADIUS_KILOMETERS * asin(sqrt(
                 haversine(this::latitudeRadians, from, to) + 
                 haversine(this::longitudeRadians, from, to) * cos(latitudeRadians(from)) * cos(latitudeRadians(to))));
     }

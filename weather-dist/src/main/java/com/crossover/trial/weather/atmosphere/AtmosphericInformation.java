@@ -1,7 +1,7 @@
 package com.crossover.trial.weather.atmosphere;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,10 +30,6 @@ public class AtmosphericInformation {
 
     /** the last time this data was updated, in milliseconds since UTC epoch */
     private long lastUpdateTime;
-
-    public AtmosphericInformation() {
-
-    }
 
     public DataPoint getTemperature() {
         return temperature;
@@ -92,9 +88,8 @@ public class AtmosphericInformation {
     }
 
     public boolean hasInformation() {
-        return Arrays
-                .asList(getCloudCover(), getHumidity(), getPrecipitation(), getPressure(), getTemperature(), getWind())
-                .stream().anyMatch(dp -> dp != null);
+        return Stream.of(getCloudCover(), getHumidity(), getPrecipitation(), getPressure(), getTemperature(), getWind())
+                     .anyMatch(dp -> dp != null);
     }
 
     @JsonIgnore
